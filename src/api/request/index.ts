@@ -30,8 +30,10 @@ class Request {
     // 拦截器执行顺序 接口请求 -> 实例请求 -> 全局请求 -> 实例响应 -> 全局响应 -> 接口响应
     this.instance.interceptors.request.use(
       (res: AxiosRequestConfig) => {
+        // 如果有token，每次请求都带上token
         const token = localStorage.getItem('token')
         if (token) {
+          // 设置请求头
           res.headers!.Authorization = token
         }
         return res
