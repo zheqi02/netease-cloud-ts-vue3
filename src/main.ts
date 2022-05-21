@@ -10,11 +10,6 @@ import router from './router'
 
 const app = createApp(App)
 // 这里放注册插件
-app.use(createPinia())
-app.use(router)
+app.use(createPinia()).use(router)
 
-// 在引入css重置库之前插入组件库插入meta标签
-const meta = document.createElement('meta')
-meta.name = 'naive-ui-style'
-document.head.appendChild(meta)
 app.mount('#app')

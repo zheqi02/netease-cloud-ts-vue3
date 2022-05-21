@@ -7,6 +7,12 @@ import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 // 引入css库
 import Unocss from 'unocss/vite'
 import { presetUno, presetAttributify, presetIcons } from 'unocss'
+// 引入可以在setup中写name的插件
+import vueSetupExtend from 'vite-plugin-vue-setup-extend'
+// rollup打包可视化插件
+import { visualizer } from 'rollup-plugin-visualizer'
+// 更好的html页面控制
+import { createHtmlPlugin } from 'vite-plugin-html'
 
 import * as path from 'path'
 
@@ -35,6 +41,40 @@ export default ({ mode }) =>
         rules: [
           // 设置规则
         ]
+      }),
+      vueSetupExtend(),
+      visualizer(),
+      createHtmlPlugin({
+        minify: true,
+        /**
+         * 在这里写entry后，你将不需要在`index.html`内添加 script 标签，原有标签需要删除
+         * @default src/main.ts
+         */
+        entry: 'src/main.ts',
+        /**
+         * 如果你想将 `index.html`存放在指定文件夹，可以修改它，否则不需要配置
+         * @default index.html
+         */
+        template: './index.html',
+
+        /**
+         * 需要注入 index.html ejs 模版的数据
+         */
+        inject: {
+          data: {
+            title: loadEnv(mode, process.cwd()).VITE_APP_TITLE,
+            injectScript: `<script src="./inject.js"></script>`
+          },
+          tags: [
+            {
+              injectTo: 'body-prepend',
+              tag: 'div',
+              attrs: {
+                id: 'tag'
+              }
+            }
+          ]
+        }
       })
     ],
     resolve: {
@@ -53,7 +93,7 @@ export default ({ mode }) =>
           // 来自vite的配置，.env文件中的API_URL
           target: loadEnv(mode, process.cwd()).VITE_APP_URL,
           changeOrigin: true,
-          // 把路径/api/替换为空
+          // 把路径/api替换为空
           rewrite: (path) => path.replace(/^\/api/, '')
         }
       }

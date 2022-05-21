@@ -1,8 +1,9 @@
 /// <reference types="vite/client" />
 /// <reference types="vue/macros-global" />
-// 上面两个是必须要加上的，三个斜杠开头的
+
 declare module '*.vue' {
   import type { DefineComponent } from 'vue'
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/ban-types
   const component: DefineComponent<{}, {}, any>
   export default component
 }

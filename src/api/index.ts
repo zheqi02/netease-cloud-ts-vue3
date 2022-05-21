@@ -15,7 +15,7 @@ interface ZQRequestConfig<T, R> extends RequestConfig<ZQResponse<R>> {
 }
 
 const request = new Request({
-  baseURL: import.meta.env.VITE_APP_URL,
+  baseURL: '/api',
   timeout: 5000,
   interceptors: {
     // 请求拦截器

@@ -9,7 +9,14 @@ module.exports = {
     env: true, // 环境变量
     useRoute: true, // 路由
     useRouter: true, // 路由
-    useStore: true // pinia
+    useStore: true, // pinia
+    "$ref": true, // 语法糖
+    "$": true, // 语法糖
+    "$$": true, // 语法糖
+    "$computed": true, // 语法糖
+    "$shallowRef": true, // 语法糖
+    "$customRef": true, // 语法糖
+    "$toRef": true, // 语法糖
   },
   /* 指定如何解析语法。可以为空，但若不为空，只能配该值，原因见下文。*/
   parser: 'vue-eslint-parser',
@@ -61,7 +68,16 @@ module.exports = {
     'vue/max-attributes-per-line': ['off'], // 关闭vue的属性换行
     'for-direction': 2, // 强制 for 循环中的循环变量在循环开始处被定义
     'comma-dangle': 0, // 对象字面量项尾不能有逗号
-    '@typescript-eslint/no-non-null-assertion': 'off'
+    '@typescript-eslint/no-non-null-assertion': 'off',
+    "@typescript-eslint/ban-types": [
+      "error",
+      {
+        "extendDefaults": true,
+        "types": {
+          "{}": false
+        }
+      }
+    ]
   },
   overrides: [
     // 全局配置
